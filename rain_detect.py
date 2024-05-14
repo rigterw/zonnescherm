@@ -64,7 +64,7 @@ def will_rain():
 #function that counts how many times 5 minutes can pass before it will rain
 def update_time_dry(data):
     global time_dry
-    time_dry = 0
+    time_dry = -3
     rain_times = data.split('\n')
 
     for time in rain_times:
