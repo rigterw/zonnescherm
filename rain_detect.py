@@ -69,8 +69,9 @@ def update_time_dry(data):
     rain_times = data.split('\n')
 
     for time in rain_times:
+        if(time == ''):
+            continue
         rain_expectation = time.split('|')
-
         if(rain_expectation[0] == "000"):
             time_dry += 1
         else:
