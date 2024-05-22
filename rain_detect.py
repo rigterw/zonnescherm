@@ -2,6 +2,7 @@ import asyncio
 import configparser
 import requests
 import urllib.parse
+import warnings
 
 config = configparser.ConfigParser()
 time_dry = 99
@@ -24,8 +25,11 @@ def is_screen_open():
     encoded_device_url = urllib.parse.quote_plus(config["TaHoma"]["device_url"])
     url = f'https://gateway-{config["TaHoma"]["hub_pin"]}.local:{config["TaHoma"]["hub_port"]}/enduser-mobile-web/1/enduserAPI/setup/devices/{encoded_device_url}/states'
     headers = {"Authorization": f'Bearer {config["TaHoma"]["api_key"]}'}
-    response = requests.get(url, headers=headers, verify=False)
 
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        response = requests.get(url, headers=headers, verify=False)
+        
     json_response = response.json()
     return json_response[5]["value"] == "open"
 
@@ -49,7 +53,9 @@ def close_screen():
             }
         ]
         }
-    requests.post(url, json=body, headers=headers, verify=False)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        requests.post(url, json=body, headers=headers, verify=False)
 
 #function that checks if it will rain within 5 minutes
 def will_rain():
