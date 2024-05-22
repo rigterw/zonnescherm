@@ -30,6 +30,7 @@ def is_screen_open():
     return json_response[5]["value"] == "open"
 
 def close_screen():
+    print("Closing Screen")
     url = f'https://gateway-{config["TaHoma"]["hub_pin"]}.local:{config["TaHoma"]["hub_port"]}/enduser-mobile-web/1/enduserAPI/exec/apply'
     headers = {"Authorization": f'Bearer {config["TaHoma"]["api_key"]}'}
     body = {
@@ -38,7 +39,7 @@ def close_screen():
             {
             "commands": [
                 {
-                "name": "open",
+                "name": "close",
                 "parameters": [
                     0
                 ]
@@ -68,11 +69,12 @@ def update_time_dry(data):
     rain_times = data.split('\n')
 
     for time in rain_times:
-        rain_expectation = time.split('|')[0]
+        rain_expectation = time.split('|')
 
-        if(rain_expectation == "000"):
+        if(rain_expectation[0] == "000"):
             time_dry += 1
         else:
+            print(f"rain expected at {rain_expectation[1]}")
             return
 
 
