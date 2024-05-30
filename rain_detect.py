@@ -104,4 +104,5 @@ def getRequest(url, headers, verify):
 
 config.read('config.ini')
 will_rain()
+print("starting rain detector")
 asyncio.run(rain_check())
