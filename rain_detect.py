@@ -6,8 +6,11 @@ import warnings
 
 config = configparser.ConfigParser()
 time_dry = 99
+screen_open = False
+
 async def rain_check():
     while True:
+
         check_rain()
         await asyncio.sleep(600)
 
@@ -26,12 +29,15 @@ def is_screen_open():
     url = f'https://gateway-{config["TaHoma"]["hub_pin"]}.local:{config["TaHoma"]["hub_port"]}/enduser-mobile-web/1/enduserAPI/setup/devices/{encoded_device_url}/states'
     headers = {"Authorization": f'Bearer {config["TaHoma"]["api_key"]}'}
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        response = requests.get(url, headers=headers, verify=False)
-        
-    json_response = response.json()
-    return json_response[5]["value"] == "open"
+    global screen_open
+    response = getRequest(url, headers, False)
+
+    if(response == "failed"):
+        print(f"request to hub failed, keep last value for screen_open: {screen_open}")
+    else:
+        screen_open = response[5]["value"] == "open"
+    
+    return screen_open
 
 def close_screen():
     print("Closing Screen")
@@ -53,9 +59,12 @@ def close_screen():
             }
         ]
         }
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        requests.post(url, json=body, headers=headers, verify=False)
+    try: 
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            requests.post(url, json=body, headers=headers, verify=False)
+    except Exception as e:
+        print(e)
 
 #function that checks if it will rain within 5 minutes
 def will_rain():
@@ -84,6 +93,14 @@ def update_time_dry(data):
             print(f"rain expected at {rain_expectation[1]}")
             return
 
+def getRequest(url, headers, verify):
+    try: 
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            response = requests.get(url, headers=headers, verify=verify)
+            return response.json()
+    except Exception as e:
+        return "failed"
 
 config.read('config.ini')
 will_rain()
