@@ -6,6 +6,6 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 
 RUN git clone $REPO_URL .
-COPY $CONF .
+COPY $CONF ./config.ini
 RUN chmod +x start.sh
 CMD ["./start.sh"]
