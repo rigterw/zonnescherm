@@ -102,7 +102,8 @@ def getRequest(url, headers, verify):
     except Exception as e:
         return "failed"
 
-config.read('config.ini')
-will_rain()
-print("starting rain detector")
-asyncio.run(rain_check())
+def __main__():
+    config.read('config.ini')
+    will_rain()
+    print("starting rain detector")
+    asyncio.run(rain_check())
