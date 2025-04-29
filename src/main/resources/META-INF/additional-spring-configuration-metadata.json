@@ -1,0 +1,29 @@
+{
+    "properties": [
+        {
+            "name": "tahoma.device.url",
+            "type": "java.lang.String",
+            "description": "A description for 'tahoma.device.url'"
+        },
+        {
+            "name": "tahoma.hub.port",
+            "type": "java.lang.String",
+            "description": "A description for 'tahoma.hub.port'"
+        },
+        {
+            "name": "tahoma.hub.pin",
+            "type": "java.lang.String",
+            "description": "A description for 'tahoma.hub.pin'"
+        },
+        {
+            "name": "tahoma.api.key",
+            "type": "java.lang.String",
+            "description": "A description for 'tahoma.api.key'"
+        },
+        {
+            "name": "weather.lon",
+            "type": "java.lang.String",
+            "description": "A description for 'weather.lon'"
+        }
+    ]
+}
