@@ -22,8 +22,13 @@
         },
         {
             "name": "weather.lon",
-            "type": "java.lang.String",
-            "description": "A description for 'weather.lon'"
+            "type": "java.lang.Float",
+            "description": "The longitude for the weather API"
+        },
+        {
+            "name": "weather.lat",
+            "type": "java.lang.Float",
+            "description": "The latitude for the weather API"
         }
     ]
 }
